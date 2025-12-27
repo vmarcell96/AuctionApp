@@ -1,5 +1,3 @@
-using System;
-
 namespace AuctionService.Entities;
 
 public class Item
@@ -10,7 +8,7 @@ public class Item
   public int Year { get; set; }
   public string Color { get; set; }
   public int Mileage { get; set; }
-  public string imageUrl { get; set; }
+  public string ImageUrl { get; set; }
   //nav properties for entity framework
   public Auction Auction { get; set; }
   public Guid AuctionId { get; set; }
