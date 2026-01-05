@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AuctionService.Data.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20251227182418_InitialCreate")]
+    [Migration("20260105194745_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -34,6 +34,9 @@ namespace AuctionService.Data.Migrations
                     b.Property<DateTime>("AuctionEnd")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("AuctionStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -47,9 +50,6 @@ namespace AuctionService.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<int?>("SoldAmount")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Status")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -72,23 +72,20 @@ namespace AuctionService.Data.Migrations
                     b.Property<Guid>("AuctionId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Color")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Make")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Mileage")
+                    b.Property<int>("Category")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Model")
+                    b.Property<int>("Condition")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int>("Year")
-                        .HasColumnType("integer");
+                    b.Property<string>("ImageName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

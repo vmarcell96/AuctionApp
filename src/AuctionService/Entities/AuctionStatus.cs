@@ -1,6 +1,7 @@
 namespace AuctionService.Entities;
 
-public enum Status
+//Status of the auction
+public enum AuctionStatus
 {
   Live,
   Finished,
