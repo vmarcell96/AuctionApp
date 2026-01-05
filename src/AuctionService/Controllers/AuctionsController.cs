@@ -90,4 +90,22 @@ public class AuctionsController : ControllerBase
 
         return Ok();
     }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteAuction(Guid id)
+    {
+        var auction = await _context.Auctions.FindAsync(id);
+
+        if (auction == null) return NotFound();
+
+        //TODO: check seller == username
+
+        _context.Auctions.Remove(auction);
+
+        var success = await _context.SaveChangesAsync() > 0;
+
+        if (!success) return BadRequest("Could not update DB");
+
+        return Ok();
+    }
 }
