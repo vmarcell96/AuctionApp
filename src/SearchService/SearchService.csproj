@@ -8,11 +8,12 @@
 
   <ItemGroup>
     <Folder Include="Controllers/" />
+    <Folder Include="Models/" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.0.0" />
-    <PackageReference Include="MongoDB.Entities" Version="25.0.0" />
+    <PackageReference Include="MongoDB.Entities" Version="24.1.1" />
   </ItemGroup>
 
 </Project>
