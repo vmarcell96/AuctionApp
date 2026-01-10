@@ -1,4 +1,5 @@
 using AuctionService.Data;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,10 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AuctionDbContext>(options =>
 {
-  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddAutoMapper(_ => { }, AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
 var app = builder.Build();
 
@@ -21,7 +29,8 @@ app.MapControllers();
 try
 {
     DbInitializer.InitDb(app);
-} catch (Exception e)
+}
+catch (Exception e)
 {
     Console.WriteLine(e);
 }
