@@ -21,11 +21,6 @@ public class AuctionCreatedConsumer : IConsumer<AuctionCreated>
 
         var item = _mapper.Map<Item>(context.Message);
 
-        if (item.Title == "Invalid")
-        {
-            throw new ArgumentException("Cannot create auction with invalid name");
-        }
-
         await item.SaveAsync();
     }
 }

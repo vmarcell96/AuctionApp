@@ -30,6 +30,22 @@ builder.Services.AddMassTransit(x =>
             e.ConfigureConsumer<AuctionCreatedConsumer>(context);
         });
 
+        cfg.ReceiveEndpoint("search-auction-updated", e =>
+        {
+            // 5 retries, every 5 seconds
+            e.UseMessageRetry(r => r.Interval(5, 5));
+
+            e.ConfigureConsumer<AuctionUpdatedConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint("search-auction-deleted", e =>
+        {
+            // 5 retries, every 5 seconds
+            e.UseMessageRetry(r => r.Interval(5, 5));
+
+            e.ConfigureConsumer<AuctionDeletedConsumer>(context);
+        });
+
         cfg.ConfigureEndpoints(context);
     });
 });

@@ -70,7 +70,6 @@ public class AuctionsController : ControllerBase
 
         var success = await _context.SaveChangesAsync() > 0;
 
-
         if (!success) return BadRequest("Could not save changes to the DB");
 
         return CreatedAtAction(nameof(GetAuctionById), new { auction.Id }, newAuction);
@@ -87,6 +86,7 @@ public class AuctionsController : ControllerBase
 
         auction.Item.Title = updateAuctionDto.Title ?? auction.Item.Title;
         auction.Item.Description = updateAuctionDto.Description ?? auction.Item.Description;
+
         if (Enum.TryParse(updateAuctionDto.Category, true, out Category category))
         {
             auction.Item.Category = category;
@@ -95,6 +95,8 @@ public class AuctionsController : ControllerBase
         {
             auction.Item.Condition = condition;
         }
+
+        await _publishEndpoint.Publish(_mapper.Map<AuctionUpdated>(auction));
 
         var success = await _context.SaveChangesAsync() > 0;
 
@@ -113,6 +115,8 @@ public class AuctionsController : ControllerBase
         //TODO: check seller == username
 
         _context.Auctions.Remove(auction);
+
+        await _publishEndpoint.Publish<AuctionDeleted>(new { Id = auction.Id.ToString() });
 
         var success = await _context.SaveChangesAsync() > 0;
 
